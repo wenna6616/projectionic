@@ -1,0 +1,159 @@
+.icon-start {
+    //padding: 6px;
+    //background-color: var(--account-header, #36454f); // UnComment this to add background color to icon
+    //color: var(--account-header-text, #000);
+    //border-radius: 50%; // Tune this to add rounded corner when added background color
+    font-size: 22px; // Adjust the size of the icon
+}
+
+.rowaccount{
+    --background: radial-gradient(circle at 87.5% 12.5%, #abc226 0, #96c129 12.5%, #7abc27 25%, #55b222 37.5%, #09a319 50%, #009415 62.5%, #00881c 75%, #008128 87.5%, #007d37 100%);
+    border: solid 1px #ccc; 
+    border-radius: 4px; 
+    background-color: #ffffff;
+    margin:auto;
+}
+.col-top-s{
+    max-width:33.3%; 
+    white-space: normal;       
+}
+.labelheader{
+    font-size: 14px !important;
+    font-weight: 500;
+}
+.spanheader{
+    color:rgba(0,0,0,.54)!important; 
+    font-size: 11px !important;
+    font-weight: 400!important;
+}
+.border-dev{
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+.hide-overflow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px !important;
+    font-weight: 400!important;
+    text-align: center;
+}
+.my-account-header {
+    //--background: #f1f5f8;
+    //background: #f1f5f8;
+    background-color: var(--account-header, #ffffff);
+    //color: var(--account-header-text, rgba(0, 0, 0, 0.87));
+    padding-top: 20px;  
+    }
+    ion-avatar {
+        --border-radius: 40%;
+        width: 80px; 
+        height: 80px;
+     }
+    .account-name {
+        text-align: center;
+        //font-size: 16px;
+        //font-weight: 500;
+        //color: var(--account-header-text,rgba(0, 0, 0, 0.87));
+        padding: 10px;
+        h3 {
+            font-weight: 600;
+            font-size: 15px;
+           // text-align: center;
+          }
+        p {
+            font-weight: 500;
+            font-size: 12px;
+        }
+        .bronze{
+            --background: radial-gradient(circle at 50% -3.03%, #c1b662 0, #c5ad57 10%, #c8a34d 20%, #ca9843 30%, #cc8c3a 40%, #cd7f32 50%, #ce712d 60%, #cf632b 70%, #d0542c 80%, #d04430 90%, #d13336 100%);
+            color: #fff;
+            font-size: 10px;
+            margin-inline:unset !important;
+        }
+        .silver{
+            --background: radial-gradient(circle at 50% -3.03%, #c5ecf2 0, #c5e5e7 10%, #c4dddd 20%, #c3d4d3 30%, #c2cac9 40%, #c0c0c0 50%, #bdb6b8 60%, #baacb2 70%, #b5a4ae 80%, #b19dab 90%, #ab96a9 100%);
+            //--background: #f1f5f8;
+            color: #fff;
+            font-size: 10px;
+            margin-inline:unset !important;
+        }
+        .gold{
+            --background: radial-gradient(circle at 50% -3.03%, #ffff74 0, #fff24a 25%, #ffd700 50%, #f6bc00 75%, #efa100 100%);
+            //--background: #f1f5f8;
+            color: #fff;
+            font-size: 10px;
+            margin-inline:unset !important;
+        }
+        .diamond{
+            --background: radial-gradient(circle at 50% -3.03%, #e2eaed 0, #bfd8e4 25%, #9ac5db 50%, #74b1d4 75%, #4f9ecd 100%);
+            //--background: #f1f5f8;
+            color: #fff;
+            font-size: 10px;
+            margin-inline:unset !important;
+        }
+        span {
+            color: #ffffff;
+            padding: 10px;
+            background-color: #CD7F32;
+            border-radius: 10px;
+           // text-align: center;
+           .iconmember{
+            float: left;
+            }
+        }
+    .header-menus {
+        ion-item {
+            color: var(--account-header-text,rgba(0, 0, 0, 0.87));
+        }
+        ion-icon {
+            margin-right: 10px;
+        }
+    }
+}
+.img-profile{
+    width: 90px;
+    height: 90px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.icon-header-icon {
+    padding: 15px;
+    background-color: var(--account-header-text, #000);
+    border-radius: 50%;
+    font-size: xx-large;
+    color: var(--account-header, #36454f);
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+ion-list {
+    a {
+        text-decoration-line: none;
+    }
+    @media (min-width: 700px) {
+        max-width: 600px;
+        margin: auto;
+        margin-top: 40px;
+    }
+    ion-item:first-child {
+        --border-width: 0.55px 0 0 0;
+    }
+    ion-item:last-child {
+        --border-width: 0 0 0.55px 0;
+        --inner-border-width: 0 0 0 0;
+    }
+    ion-icon{
+        padding: 4px;
+        //background-color: var(--ion-color-primary, #428xff);
+        border-radius: 4px;
+        font-size: 16px;
+    }
+}
+.list-md {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border-radius: 20px 20px 0 0;
+   
+}

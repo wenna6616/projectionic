@@ -1,0 +1,123 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+  	<ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/account/orders"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{"History order " | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="order">
+<ion-list *ngIf="order">
+  <ion-list-header>
+    <ion-label style="font-weight: 900;">{{order.number}} - <span style="text-transform: uppercase;">{{order.status}}</span></ion-label>
+  </ion-list-header>
+  <ion-list-header>
+    <ion-label>{{"Date" | translate}}</ion-label>
+  </ion-list-header>
+  <ion-item lines="full">
+    <ion-label text-wrap>
+      <p>{{order.date_created | date:'MMM d, y hh:mm a'}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-list-header>
+    <ion-label>{{"Billing Address" | translate}}</ion-label>
+  </ion-list-header>
+  <ion-item lines="full">
+    <ion-label text-wrap>
+      <p>
+    <span>{{order.billing.first_name}}</span>&nbsp;
+    <span>{{order.billing.last_name}}</span>&nbsp;
+    <span>{{order.billing.company}}</span>&nbsp;
+    <span>{{order.billing.address_1}}</span>&nbsp;
+    <span>{{order.billing.address_2}}</span>&nbsp;
+    <span>{{order.billing.city}}</span>&nbsp;
+    <span>{{order.billing.state}}</span>&nbsp;
+    <span>{{order.billing.postcode}}</span>&nbsp;
+    <span>{{order.billing.email}}</span>&nbsp;
+    <span>{{order.billing.phone}}</span>
+  </p>
+  <div *ngFor="let data of provinsi" style="color:var(--ion-color-step-600,#666);font-size: 14px;">
+    <span *ngIf="data.value == order.billing.state">{{data.label}}</span>
+  </div>
+    </ion-label>
+  </ion-item>
+  <ion-list-header>
+    <ion-label>{{"Shipping Address" | translate}}</ion-label>
+  </ion-list-header>
+  <ion-item lines="full">
+    <ion-label text-wrap>
+      <p>
+    <span>{{order.shipping.first_name}}</span>&nbsp;
+    <span>{{order.shipping.last_name}}</span>&nbsp;
+    <span>{{order.shipping.company}}</span>&nbsp;
+    <span>{{order.shipping.address_1}}</span>&nbsp;
+    <span>{{order.shipping.address_2}}</span>&nbsp;
+    <span>{{order.shipping.city}}</span>&nbsp;
+    <span>{{order.shipping.state}}</span>&nbsp;
+    <span>{{order.shipping.postcode}}</span>&nbsp;
+    <span>{{order.shipping.email}}</span>&nbsp;
+    <span>{{order.shipping.phone}}</span>
+  </p>
+  <div *ngFor="let data of provinsi" style="color:var(--ion-color-step-600,#666);font-size: 14px;">
+    <span *ngIf="data.value == order.shipping.state">{{data.label}}</span>
+  </div>
+    </ion-label>
+  </ion-item>
+  <ion-list-header>
+    <ion-label>{{"Shipping Method" | translate}}</ion-label>
+  </ion-list-header>
+  <ion-item lines="full">
+    <ion-label text-wrap *ngFor="let item of order.shipping_lines | keys">
+    <p>{{item.value.method_title}}</p>
+    <div *ngFor="let meta of order.meta_data">
+      <p style="color: #666666" *ngIf="meta.key == 'plugin_resi_data'" (click)="copyresi(meta.value.tracking)">No. Resi {{meta.value.tracking}} <span *ngIf="meta.key == 'plugin_resi_data'" (click)="copyresi(meta.value.tracking)"style="float: right">Salin <ion-icon color="primary" name="copy-outline"></ion-icon> </span>
+      </p>
+    </div>
+    </ion-label>
+  </ion-item>
+  <ion-list-header>
+    <ion-label>{{"Payment Method" | translate}}</ion-label>
+  </ion-list-header>
+  <ion-item lines="full">
+    <ion-label>
+    <p [innerHTML]="order.payment_method_title"></p>
+    <div *ngFor="let item of caraBayar">
+      <p *ngIf="item.id == order.payment_method && order.status == 'on-hold' " [innerHTML]="item.description"></p>
+    </div>
+    </ion-label>
+  </ion-item>
+  <div *ngIf="showRefund">
+    <ion-item lines="none">
+        <ion-input required type="text" [(ngModel)]="refund.ywcars_form_reason" name="amount" placeholder="Reason for refund"></ion-input>
+    </ion-item>
+    <ion-button expand="block" color="{{settings.theme.button}}" (click)="requestRefund()">Request refund</ion-button>
+ </div>
+
+  <ion-list-header>
+    <ion-label>{{"Items" | translate}}</ion-label>
+  </ion-list-header>
+  <ion-item lines="full">
+    <ion-label text-wrap>
+    <p *ngFor="let item of order.line_items">{{item.name}} x {{item.quantity}} <span style="float: right">{{item.total | currency:settings.currency:'symbol':'1.2-2'}}</span></p>
+    </ion-label>
+  </ion-item>
+  <ion-list-header>
+    <ion-label>{{"Totals" | translate}}</ion-label>
+  </ion-list-header>
+  <ion-item lines="full">
+    <ion-label text-wrap>
+    <p>{{"Shipping" | translate}}<span style="float: right">{{order.shipping_total | currency:settings.currency:'symbol':'1.2-2'}}</span></p>
+    <p>{{"Discount" | translate}}<span style="float: right">{{order.discount_total | currency:settings.currency:'symbol':'1.2-2'}}</span></p>
+    <p>{{"Tax" | translate}}<span style="float: right">{{order.total_tax | currency:settings.currency:'symbol':'1.2-2'}}</span></p>
+    <p *ngFor="let fee of order.fee_lines">{{fee.name}}<span style="float: right">{{fee.total | currency:settings.currency:'symbol':'1.2-2'}}</span></p>
+    <ion-label class="grand-total">Total<span style="float: right">{{order.total | currency:settings.currency:'symbol':'1.2-2'}}</span></ion-label>
+  </ion-label>
+  </ion-item>
+  <div class="submit-button">
+    <p *ngFor="let meta of order.meta_data">
+      <ion-button mode="ios" expand="block" fill="solid" *ngIf="meta.key == '_mt_payment_url' && order.status == 'pending'" (click)="linkBayar(meta.value)">Bayar Sekarang</ion-button>
+    </p>
+  </div>
+</ion-list>
+</ion-content>

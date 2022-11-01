@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+  <ion-buttons slot="start" (click)="close(false)">
+      <ion-back-button *ngIf="settings.customer?.id" defaultHref="/tabs/account"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="settings.customer?.id">{{"Login" | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+    <div class="logo-block">
+    <ion-grid>
+      <img class="logo" src="assets/image/logo.png">
+      
+    </ion-grid>
+    </div>
+    
+
+    <div class="login1">
+      
+      <ion-card mode="{{settings.settings.mode}}">
+      <div class="form">
+            <ion-list>
+              <h3 ion-text style="text-align: center;">Login</h3>
+            <form [formGroup]="form">
+              <ion-item mode="ios">
+              <ion-icon slot="end" color="medium" name="person-circle-outline"></ion-icon>
+              <ion-input type="text" formControlName="username" placeholder="{{'Email/Username' | translate}}">
+              </ion-input>
+              </ion-item>
+
+              <ion-item mode="ios">
+                <ion-icon slot="end" color="medium" [name]="passwordIcon" (click)="hideShowPassword()"></ion-icon>
+              <ion-input [type]="passwordType" formControlName="password" placeholder="{{'Password' | translate}}">
+              </ion-input>
+              </ion-item>
+              </form>
+              
+            </ion-list>
+            <ion-button fill="solid" mode="ios" color="{{settings.theme.button}}" expand="block" [disabled]="disableSubmit || (!formSMS.valid && !form.valid)" (click)="onSubmit()">{{"Login"| translate}}</ion-button>
+            <ion-button mode="ios" style="margin-top: 0px;" color="dark" expand="full" fill="clear" (click)="forgotton()">{{"Forgot Password"| translate}}?</ion-button>
+            <div class="errors" *ngIf="errors">
+              <div *ngFor="let error of errors | keys" style="text-align: center; padding-top: 10px;">
+                <ion-label color="danger" [innerHTML]="error.value"></ion-label>
+              </div>
+            </div>
+      </div>
+
+
+
+      <div class="form" *ngIf="segment == 'register'">
+        <ion-list>
+          <form [formGroup]="formRegister">
+            <ion-item mode="md">
+              <ion-icon slot="start" name="person" mode="md"></ion-icon>
+            <ion-input required type="text" formControlName="first_name" placeholder="{{'First Name' | translate}}"></ion-input>
+            </ion-item>
+            <ion-item mode="md">
+              <ion-icon slot="start" name="person" mode="md"></ion-icon>
+            <ion-input required type="text" formControlName="last_name" placeholder="{{'Last Name' | translate}}"></ion-input>
+            </ion-item>
+            <ion-item mode="md">
+              <ion-icon slot="start" name="call" mode="md"></ion-icon>
+            <ion-input required type="text" formControlName="phone" placeholder="{{'Phone' | translate}}"></ion-input>
+            </ion-item>
+            <ion-item mode="md">
+              <ion-icon slot="start" name="mail" mode="md"></ion-icon>
+            <ion-input required type="email" formControlName="email" placeholder="{{'Email/Username' | translate}}"></ion-input>
+            </ion-item>
+            <ion-item mode="md">
+              <ion-icon slot="start" name="eye" mode="md"></ion-icon>
+            <ion-input required type="password" formControlName="password" placeholder="{{'Password' | translate}}"></ion-input>
+            </ion-item>
+          </form>
+          <ion-button shape="undefined" mode="md" color="{{settings.theme.button}}" expand="block" fill="solid" (click)="onRegister()">{{"Register" | translate}}</ion-button>
+        </ion-list>
+        
+        <div class="errors" *ngIf="errorsRegister">
+          <div *ngFor="let error of errorsRegister | keys" style="text-align: center; padding: 8px; margin-top: 16px;">
+            <ion-label color="danger" class="error" [innerHTML]="error.value"></ion-label>
+          </div>
+         </div>
+      </div>
+
+
+      </ion-card>
+
+         
+    </div>
+
+
+
+</ion-content>

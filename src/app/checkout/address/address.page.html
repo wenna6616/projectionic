@@ -1,0 +1,193 @@
+
+<ion-header mode='ios'>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/cart"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{"Address" | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <div class="spinner" *ngIf="loader"><ion-spinner> </ion-spinner></div>
+
+<div *ngIf="!loader">
+<ion-list no-margin>
+ 
+  <ion-list-header>
+    <ion-label color="primary">{{"Billing Address" | translate}}</ion-label>
+  </ion-list-header>
+
+        <ion-item>
+            <ion-label position="stacked">{{"First Name" | translate}}</ion-label>
+            <ion-input required type="text" [(ngModel)]="checkoutData.form.billing_first_name" name="firstname"> </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">{{"Last Name" | translate}}</ion-label>
+            <ion-input required type="text" [(ngModel)]="checkoutData.form.billing_last_name" name="lastname"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">{{"Phone" | translate}}</ion-label>
+            <ion-input required type="text" [(ngModel)]="checkoutData.form.billing_phone" name="telephone"> </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">{{"Company" | translate}}</ion-label>
+            <ion-input required type="text" [(ngModel)]="checkoutData.form.billing_company" name="company"> </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">{{"Street Address" | translate}}</ion-label>
+            <ion-textarea required type="text" [(ngModel)]="checkoutData.form.billing_address_1" name="street1" value="checkoutData.form.billing_address_1"></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">{{"Street Address" | translate}} 2</ion-label>
+            <ion-textarea required type="text" [(ngModel)]="checkoutData.form.billing_address_2" name="street2" value="checkoutData.form.billing_address_2"></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">{{"Email" | translate}}</ion-label>
+            <ion-input required type="email" [(ngModel)]="checkoutData.form.billing_email" name="email"> </ion-input>
+        </ion-item>
+
+       <!-- <ion-item>
+            <ion-label position="stacked">{{"City" | translate}}</ion-label>
+            <ion-input required type="text" [(ngModel)]="checkoutData.form.billing_city" name="city"> </ion-input>
+            <span>* Mohon untuk memasukkan kota atau kabupaten dengan benar</span>
+            <span>* <b>Contoh</b>: Kota Mojokerto / Kabupaten Mojokerto</span>
+            <br>
+        </ion-item> -->
+        
+        <ion-item>
+            <ion-label position="stacked">{{"Postcode" | translate}}</ion-label>
+            <ion-input required type="text" [(ngModel)]="checkoutData.form.billing_postcode" name="postcode"> </ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="checkoutData.form?.countries && checkoutData.form?.countries.length > 1">
+            <ion-label>{{"Country" | translate}}</ion-label>
+            <ion-select [(ngModel)]="checkoutData.form.billing_country" (ngModelChange)="getBillingRegion()" name="billing_country">
+                <div *ngFor="let field of checkoutData.form.countries">
+                    <ion-select-option value="{{field.value}}"><span [innerHTML]="field.label"></span> </ion-select-option>
+                </div>
+            </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="checkoutData.billingStates?.regions.length" (click)="clearStates()">
+            <ion-label position="stacked">{{"State" | translate}}</ion-label>
+            <ion-select [(ngModel)]="checkoutData.form.billing_state" name="billing_state" placeholder="Select State" (ngModelChange)="getBillingKabupaten()">
+				<div *ngFor="let field of checkoutData.billingStates.regions">
+                    <ion-select-option value="{{field.value}}">{{field.label}}</ion-select-option>
+               </div>
+            </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="!checkoutData.billingStates?.regions.length">
+            <ion-label position="stacked">{{"State" | translate}}</ion-label>
+            <ion-input required type="text" [(ngModel)]="checkoutData.form.billing_state" name="billing_state"> </ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="!checkoutData.form.billing_city.length >0">
+            <ion-label position="stacked">{{"City" | translate}}</ion-label>
+            <ion-select required [(ngModel)]="checkoutData.form.billing_city" name="city" placeholder="Select City"> 
+                <div *ngFor="let data of billingKabupaten">
+                    <ion-select-option value="{{data.Name}}">{{data.Name}}</ion-select-option>
+                </div>
+            </ion-select>
+        </ion-item>
+		
+		<ion-item *ngIf="checkoutData.form.billing_city.length >0" (click)="errBillingState()">
+            <ion-label position="stacked">{{"City" | translate}}</ion-label>
+            <ion-input required type="text" [(ngModel)]="checkoutData.form.billing_city" name="city" readonly></ion-input>
+        </ion-item>
+
+        <ion-item mode="ios">
+            <ion-label color="primary">{{"Shipping Address" | translate}}</ion-label>
+            <ion-toggle style="--handle-background:#ff0707 !important;" color="success" [(ngModel)]="checkoutData.form.ship_to_different_address"></ion-toggle >
+        </ion-item> 
+</ion-list>
+
+
+<ion-list no-margin *ngIf="checkoutData.form.ship_to_different_address">
+        <ion-item>
+            <ion-label position="stacked">{{"First Name" | translate}}</ion-label>
+            <ion-input required type="text" [(ngModel)]="checkoutData.form.shipping_first_name " name="firstname"> </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">{{"Last Name" | translate}}</ion-label>
+            <ion-input required type="text" [(ngModel)]="checkoutData.form.shipping_last_name"  name="lastname"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">{{"Company" | translate}}</ion-label>
+            <ion-input required type="text" [(ngModel)]="checkoutData.form.shipping_company" name="company"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">{{"Street Address" | translate}}</ion-label>
+            <ion-textarea required type="text" [(ngModel)]="checkoutData.form.shipping_address_1" name="street1" value="checkoutData.form.shipping_address_1"></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">{{"Street Address" | translate}} 2</ion-label>
+            <ion-textarea required type="text" [(ngModel)]="checkoutData.form.shipping_address_2" name="street2" value="checkoutData.form.shipping_address_2"></ion-textarea>
+        </ion-item>
+        
+        <ion-item>
+            <ion-label position="stacked">{{"Postcode" | translate}}</ion-label>
+            <ion-input required type="number" [(ngModel)]="checkoutData.form.shipping_postcode" name="postcode"> </ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="checkoutData.form?.countries && checkoutData.form?.countries.length > 1">
+            <ion-label>{{"Country" | translate}}</ion-label>
+            <ion-select [(ngModel)]="checkoutData.form.shipping_country" (ngModelChange)="getShippingRegion()" name="shipping_country">
+                <div *ngFor="let field of checkoutData.form.countries">
+                    <ion-select-option value="{{field.value}}"><span [innerHTML]="field.label"></span> </ion-select-option>
+                </div>
+            </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="checkoutData.shippingStates?.regions.length">
+            <ion-label position="stacked">{{"State" | translate}}</ion-label>
+            <ion-select [(ngModel)]="checkoutData.form.shipping_state" name="shipping_state" (ngModelChange)="getShippingKabupaten()">
+                <div *ngFor="let field of checkoutData.shippingStates.regions">
+                    <ion-select-option value="{{field.value}}"><span [innerHTML]="field.label"></span></ion-select-option>
+                </div>
+            </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="!checkoutData.shippingStates?.regions.length">
+            <ion-label position="stacked">{{"State" | translate}}</ion-label>
+            <ion-input required type="text" [(ngModel)]="checkoutData.form.shipping_state" name="shipping_state"> </ion-input>
+        </ion-item>
+		
+		<ion-item *ngIf="!checkoutData.form.shipping_city.length >0">
+            <ion-label position="stacked">{{"City" | translate}}</ion-label>
+            <ion-select required [(ngModel)]="checkoutData.form.shipping_city" name="city" placeholder="Select City"> 
+                <div *ngFor="let data of shippingKabupaten">
+                    <ion-select-option value="{{data.Name}}">{{data.Name}}</ion-select-option>
+                </div>
+            </ion-select>
+        </ion-item>
+		
+		<ion-item *ngIf="checkoutData.form.shipping_city.length >0" (click)="errShipingState()">
+            <ion-label position="stacked">{{"City" | translate}}</ion-label>
+            <ion-input required type="text" [(ngModel)]="checkoutData.form.shipping_city" name="city" readonly></ion-input>
+        </ion-item>
+		
+
+</ion-list>
+
+
+<div *ngIf="errorMessage">
+  <h2 [innerHTML]="errorMessage" style="font-size: 14px;  color: red;margin: 16px;"></h2>
+</div>
+<div class="submit-button">
+<ion-button mode="ios" color="{{settings.theme.button}}" expand="block" fill="solid" (click)="continueCheckout()">{{"Continue" | translate}}</ion-button>
+</div>
+</div>
+</ion-content>

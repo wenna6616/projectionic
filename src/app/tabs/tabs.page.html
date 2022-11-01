@@ -1,0 +1,40 @@
+<ion-tabs class="tabscolor" >
+ 
+  <ion-tab-bar slot="bottom" [style.display]="tombolBawah ? 'none': 'inherit'">
+    <ion-tab-button mode="ios" tab="home" *ngIf="settings.customer?.id">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>{{'Home' | translate}}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button mode="ios" tab="search" *ngIf="settings.customer?.id">
+      <ion-icon name="search-outline"></ion-icon>
+      <ion-label>{{'Search' | translate}}</ion-label>
+    </ion-tab-button>
+ <!--
+    <ion-tab-button tab="categories">
+      <ion-icon name="grid"></ion-icon>
+      <ion-label>{{'Category' | translate}}</ion-label>
+    </ion-tab-button>
+-->
+    <ion-tab-button mode="ios" tab="cart" *ngIf="settings.customer?.id">
+      <ion-icon name="basket-outline"></ion-icon>
+      <ion-label>{{'Cart' | translate}}</ion-label>
+      <ion-badge color="danger" *ngIf="data.count != 0">{{data.count}}</ion-badge>
+    </ion-tab-button>
+
+    <ion-tab-button mode="ios" tab="account" *ngIf="settings.customer?.id">
+      <ion-icon name="person-outline"></ion-icon>
+      <ion-label>{{'Account' | translate}}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button mode="ios" (click)="checkLogin()" *ngIf="!settings.customer?.id">
+      <ion-icon name="log-in-outline"></ion-icon>
+      <ion-label>{{'Login' | translate}}</ion-label>
+      
+    </ion-tab-button>
+
+    
+    
+  </ion-tab-bar>
+
+</ion-tabs>
